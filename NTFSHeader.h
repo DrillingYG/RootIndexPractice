@@ -212,10 +212,10 @@ public:
 	MFTEntry(U32 targetNum);
 
 	const U32 getEntryNum(void) const;
+	U32 getEntrySize(void);
+	U8 * getBuf(void);
 
 	void setMFTEntry(void * buf, uint32_t MFTSize);
-
-	U8 * getBuf(void);
 
 	void printMftInfo();
 	void printStdInfo();
