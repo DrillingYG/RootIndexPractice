@@ -27,6 +27,10 @@ typedef uint64_t U64;
 typedef uint32_t U32;
 typedef uint16_t U16;
 typedef uint8_t U8;
+typedef int64_t S64;
+typedef int32_t S32;
+typedef int16_t S16;
+typedef int8_t S8;
 
 #pragma pack(1)
 typedef struct __GPTHeader {
@@ -127,6 +131,11 @@ typedef struct __nonResidentAttr {
 	U64 initSize;
 } nonResidentAttrHdr;
 
+typedef struct __runList {
+	U8 runOffset : 4;
+	U8 runLen : 4;
+} runList;
+
 typedef struct __STDINFO {
 	U64 createTime;
 	U64 modifiedTime;
@@ -154,7 +163,7 @@ typedef struct __FILENAME {
 	U32 reparseValue;
 	U8 lenName;
 	U8 nameSpace;
-} fileName;
+} fileNameAttr;
 
 typedef struct __INDEX_ROOT_HEADER {
 	U32 typeOfAttr;
@@ -190,13 +199,29 @@ typedef struct __NODE_ENTRY {
 
 class IndexRoot {
 public:
+	void setIndexRoot(U8 * buf);
+	~IndexRoot();
+private:
+	attrCommonHeader comHdr;
+	residentAttrHdr resHdr;
+	wstring attrName;
 	indexRootHdr IRH;
 	nodeHeader nodeHdr;
 	vector<nodeEntry> nodeEntries;
 };
 
 class IndexAttribute {
-	U32 findFirstEntryOffset();
+public:
+	void setIndexAttribute(U8 * buf);
+
+private:
+	attrCommonHeader comHdr;
+	nonResidentAttrHdr nonresHdr;
+	wstring attrName;
+	vector<runList> recordRunList;
+};
+
+class IndexRecord {
 
 private:
 	indexRecordHdr recordHdr;
