@@ -134,6 +134,8 @@ typedef struct __nonResidentAttr {
 typedef struct __runList {
 	U8 runOffset : 4;
 	U8 runLen : 4;
+	U64 runOffsetVal = 0;
+	U64 runLenVal = 0;
 } runList;
 
 typedef struct __STDINFO {
@@ -213,7 +215,6 @@ private:
 class IndexAttribute {
 public:
 	void setIndexAttribute(U8 * buf);
-
 private:
 	attrCommonHeader comHdr;
 	nonResidentAttrHdr nonresHdr;
