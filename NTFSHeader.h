@@ -203,7 +203,6 @@ class IndexRoot {
 public:
 	void setIndexRoot(U8 * buf);
 	~IndexRoot();
-private:
 	attrCommonHeader comHdr;
 	residentAttrHdr resHdr;
 	wstring attrName;
@@ -215,7 +214,8 @@ private:
 class IndexAttribute {
 public:
 	void setIndexAttribute(U8 * buf);
-private:
+	~IndexAttribute() = default;
+
 	attrCommonHeader comHdr;
 	nonResidentAttrHdr nonresHdr;
 	wstring attrName;
@@ -223,8 +223,8 @@ private:
 };
 
 class IndexRecord {
-
-private:
+public:
+	void setIndexRecord(U8 * buf);
 	indexRecordHdr recordHdr;
 	nodeHeader nodeHdr;
 	U8 * FixupArray;
@@ -269,3 +269,5 @@ U32 betole32(U32 num);
 U64 betole64(U64 num);
 void findIndexRootAttr(const U8 * mEntry, IndexRoot & idxRoot);
 void findIndexAttrAttr(const U8 * mEntry, IndexAttribute & idxRoot);
+void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr);
+void analyzeIndexRecord(U64 offset, U64 len);
