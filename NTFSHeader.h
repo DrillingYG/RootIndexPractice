@@ -176,7 +176,7 @@ typedef struct __INDEX_ROOT_HEADER {
 } indexRootHdr;
 
 typedef struct __INDEX_RECORD_HEADER {
-	U8 signature[8];
+	U8 signature[4];
 	U16 fixupArrOffset;
 	U16 fixupArrEntries;
 	U64 LSN;
@@ -195,14 +195,14 @@ typedef struct __NODE_ENTRY {
 	U16 entrySize;
 	U16 contentLen;
 	U32 flag;
-	U8 * filenameContent;
+	fileNameAttr fileNameAttrContent;
+	wstring filename;
 	U64 VCNofChild;
 } nodeEntry;
 
 class IndexRoot {
 public:
 	void setIndexRoot(U8 * buf);
-	~IndexRoot();
 	attrCommonHeader comHdr;
 	residentAttrHdr resHdr;
 	wstring attrName;
@@ -214,7 +214,6 @@ public:
 class IndexAttribute {
 public:
 	void setIndexAttribute(U8 * buf);
-	~IndexAttribute() = default;
 
 	attrCommonHeader comHdr;
 	nonResidentAttrHdr nonresHdr;
@@ -225,9 +224,11 @@ public:
 class IndexRecord {
 public:
 	void setIndexRecord(U8 * buf);
+	~IndexRecord();
+
 	indexRecordHdr recordHdr;
 	nodeHeader nodeHdr;
-	U8 * FixupArray;
+	U8 * FixupArray = nullptr;
 	vector<nodeEntry> nodeEntries;
 };
 
@@ -269,5 +270,5 @@ U32 betole32(U32 num);
 U64 betole64(U64 num);
 void findIndexRootAttr(const U8 * mEntry, IndexRoot & idxRoot);
 void findIndexAttrAttr(const U8 * mEntry, IndexAttribute & idxRoot);
-void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr);
-void analyzeIndexRecord(U64 offset, U64 len);
+void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr, wstring targetfileName, U8 * HDDdump);
+bool analyzeIndexRecord(U64 offset, U64 len,  wstring targetFileName, U8 * HDDdump);
