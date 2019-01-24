@@ -77,7 +77,6 @@ typedef struct __BootRecord {
 	U64 VolumeSerialNumber;
 	U8 Unused[430];
 	U16 Siganture;
-	U64 BytesPerClus;
 	U64 VBR_LBA;
 } VBR;
 
@@ -270,5 +269,6 @@ U32 betole32(U32 num);
 U64 betole64(U64 num);
 void findIndexRootAttr(const U8 * mEntry, IndexRoot & idxRoot);
 void findIndexAttrAttr(const U8 * mEntry, IndexAttribute & idxRoot);
-void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr, wstring targetfileName, U8 * HDDdump);
-bool analyzeIndexRecord(U64 offset, U64 len,  wstring targetFileName, U8 * HDDdump);
+void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr,
+					wstring targetfileName, U64 vbrOffset);
+bool analyzeIndexRecord(U64 offset, U64 len,  wstring targetFileName);
