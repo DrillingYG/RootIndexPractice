@@ -14,9 +14,9 @@ using namespace std;
 
 #define SECTORSIZE 512
 #define CLUSTERSIZE 4096
-#define PARTITIONTABLESIZE 16
-#define PARTITIONTABLEOFFSET 446
-#define PARTITION_ENTRY_SIZE 128
+#define MBR_PARTITIONTABLESIZE 64
+#define MBR_PARTITIONTABLEOFFSET 446
+#define PARTITION_ENTRY_SIZE 16
 
 #define NTFS 0x07
 #define GPT 0xEE
@@ -262,7 +262,8 @@ void errorMsg(string error);
 void hexdump(void * buf, U32 size);
 U32 getHDD(U8 * HDDdump, U64 offset, U32 size);
 U32 BIOSUEFI(U8 * HDDdump, vector<U32> & PartitionType);
-U64 setVBR(U8 * HDDdump, VBR &vbr);
+void setVBRFromGPT(U8 * HDDdump, VBR &vbr);
+void setVBRFromBIOS(U8 * HDDdump, VBR &vbr);
 void findRootEntry(const VBR & vbr, MFTEntry & mEntry);
 U16 betole16(U16 num);
 U32 betole32(U32 num);
