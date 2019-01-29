@@ -14,6 +14,7 @@ using namespace std;
 
 #define SECTORSIZE 512
 #define CLUSTERSIZE 4096
+#define MFTENTRYSIZE 1024
 #define MBR_PARTITIONTABLESIZE 64
 #define MBR_PARTITIONTABLEOFFSET 446
 #define PARTITION_ENTRY_SIZE 16
@@ -271,5 +272,6 @@ U64 betole64(U64 num);
 void findIndexRootAttr(const U8 * mEntry, IndexRoot & idxRoot);
 void findIndexAttrAttr(const U8 * mEntry, IndexAttribute & idxRoot);
 void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr,
-					wstring targetfileName, U64 vbrOffset);
-bool analyzeIndexRecord(U64 offset, U64 len,  wstring targetFileName);
+				wstring targetfileName, const VBR & vbr);
+bool analyzeIndexRecord(U64 offset, U64 len,  wstring targetFileName, const VBR & vbr);
+void showFileContent(U64 fileReferenceAddr, const VBR & vbr);
