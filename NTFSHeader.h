@@ -274,4 +274,4 @@ void findIndexAttrAttr(const U8 * mEntry, IndexAttribute & idxRoot);
 void analyzeIndex(const IndexRoot & idxRoot, const IndexAttribute & idxAttr,
 				wstring targetfileName, const VBR & vbr);
 bool analyzeIndexRecord(U64 offset, U64 len,  wstring targetFileName, const VBR & vbr);
-void showFileContent(U64 fileReferenceAddr, const VBR & vbr);
+void analyzeDataAttr(U64 fileReferenceAddr, const VBR & vbr);
