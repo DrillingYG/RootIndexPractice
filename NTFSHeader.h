@@ -38,7 +38,7 @@ typedef struct __GPTHeader {
 	U8 Signature[8];
 	U8 Revision[4];
 	U32 HeaderSize;
-	U32 HEaderChksum;
+	U32 HeaderChksum;
 	U32 Reserved;
 	U64 LBAofGPTHeader;
 	U64 LBAofbkpGPTHeader;
